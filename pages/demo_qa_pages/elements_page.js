@@ -15,9 +15,23 @@ export class ElementsPage {
         this.text_box_posted_email = page.locator('#email'); 
         this.text_box_posted_current_address = page.locator('.mb-1#currentAddress'); 
         this.text_box_posted_permanent_address = page.locator('.mb-1#permanentAddress'); 
+        // checkbox side menu
+        this.side_menu_check_box = page.locator('.left-pannel>.accordion>.element-group:nth-child(1)>div>.menu-list>#item-1'); 
+        this.check_box_home = page.locator('#tree-node>ol>li>.rct-text>label>.rct-checkbox'); 
+        this.check_box_home_collapse = page.locator('#tree-node>ol>li>.rct-text>button'); 
+        this.check_box_desktop = page.locator('li>ol>li:nth-child(1)>.rct-text>label>.rct-checkbox'); 
+        this.check_box_desktop_collapse = page.locator('li>ol>li:nth-child(1)>.rct-text>button'); 
+        this.check_box_documents = page.locator('li>ol>li:nth-child(2)>.rct-text>label>.rct-checkbox'); 
+        this.check_box_documents_collapse = page.locator('li>ol>li:nth-child(2)>.rct-text>button'); 
+        this.check_box_documents_work_space = page.locator('li>ol>li:nth-child(2)>ol>.rct-node:nth-child(1)>.rct-text>label>.rct-checkbox'); 
+        this.check_box_documents_office = page.locator('li>ol>li:nth-child(2)>ol>.rct-node:nth-child(2)>.rct-text>label>.rct-checkbox');
+        this.check_box_downloads = page.locator('li>ol>li:nth-child(3)>.rct-text>label>.rct-checkbox'); 
+        this.check_box_downloads_collapse = page.locator('li>ol>li:nth-child(3)>.rct-text>button'); 
+        this.check_box_downloads_word_file = page.locator('li>ol>li:nth-child(3)>ol>.rct-node:nth-child(1)>.rct-text>label>.rct-checkbox'); 
+        this.check_box_downloads_excel_file = page.locator('li>ol>li:nth-child(3)>ol>.rct-node:nth-child(2)>.rct-text>label>.rct-checkbox'); 
+        
+        
 
-
-        this.side_menu_check_box = page.locator('#item-1');  
         this.side_menu_radio_button = page.locator('#item-2');  
         this.side_menu_web_tables = page.locator('#item-3');  
         this.side_menu_buttons = page.locator('#item-4');  

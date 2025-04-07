@@ -14,6 +14,7 @@ test.beforeEach(async ({ page }) => {
     globalThis.fe_url = getEnvVariable('DEMO_QA_URL');
     globalThis.demo_qa_user_1 = getEnvVariable('DEMO_QA_USER_1', true);
     //actions
+    await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto(fe_url);
 });
 
@@ -31,5 +32,29 @@ test('JIRA-003 : Verify Text Box Form Submit', async ({ page }) => {
     expect(((await  elements_page.text_box_posted_email.innerText()).split(":"))[1]).toBe(demo_qa_user_1['email'])
     expect(((await  elements_page.text_box_posted_current_address.innerText()).split(":"))[1]).toBe(demo_qa_user_1['address'])
     expect(((await  elements_page.text_box_posted_permanent_address.innerText()).split(":"))[1]).toBe(demo_qa_user_1['address'])
+});
+
+test.only('JIRA-004 : Verify Check Box', async ({ page }) => {  
+    const home_page = new HomePage(page)
+    const elements_page = new ElementsPage(page)
+    await page.pause();
+    // ticks check box
+    await home_page.elements_card.click();  
+    await elements_page.side_menu_check_box.click();
+    await elements_page.check_box_home.click();
+    await elements_page.check_box_home_collapse.click();
+    await elements_page.check_box_desktop.click();
+    await elements_page.check_box_desktop_collapse.click();
+    await elements_page.check_box_documents_collapse.click();
+    await elements_page.check_box_downloads_collapse.click();
+    await elements_page.check_box_downloads_excel_file.click();
+    await elements_page.check_box_downloads_word_file.click();
+    // checked that the status of the check box is checked
+    expect((await elements_page.check_box_documents_office.isChecked())).toBeTruthy();
+    expect((await elements_page.check_box_documents_work_space.isChecked())).toBeTruthy();
+    // checked that the status of the check box is uncheked
+    expect((await elements_page.check_box_downloads_excel_file.isChecked())).toBeFalsy();
+    expect((await elements_page.check_box_downloads_word_file.isChecked())).toBeFalsy()
+    
 });
 

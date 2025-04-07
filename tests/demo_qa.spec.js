@@ -34,7 +34,7 @@ test('JIRA-003 : Verify Text Box Form Submit', async ({ page }) => {
     expect(((await  elements_page.text_box_posted_permanent_address.innerText()).split(":"))[1]).toBe(demo_qa_user_1['address'])
 });
 
-test.only('JIRA-004 : Verify Check Box', async ({ page }) => {  
+test('JIRA-004 : Verify Check Box', async ({ page }) => {  
     const home_page = new HomePage(page)
     const elements_page = new ElementsPage(page)
     await page.pause();

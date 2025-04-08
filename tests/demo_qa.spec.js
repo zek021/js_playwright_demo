@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { getEnvVariable, sleep } from '../aux_function/aux_function';
 import { HomePage } from '../pages/demo_qa_pages/home_page';
 import { ElementsPage } from '../pages/demo_qa_pages/elements_page';
+import { AlertsFramesWindowsPage } from '../pages/demo_qa_pages/alerts_frames_window_page';
 
 // Apply slowMo globally for all tests in this file (100ms delay)
 test.use({
@@ -40,7 +41,7 @@ test('JIRA-004 : Verify Check Box', async ({ page }) => {
     await page.pause();
     // ticks check box
     await home_page.elements_card.click();  
-    await elements_page.side_menu_check_box.click();
+    await elements_page.elements_check_box.click();
     await elements_page.check_box_home.click();
     await elements_page.check_box_home_collapse.click();
     await elements_page.check_box_desktop.click();
@@ -56,5 +57,42 @@ test('JIRA-004 : Verify Check Box', async ({ page }) => {
     expect((await elements_page.check_box_downloads_excel_file.isChecked())).toBeFalsy();
     expect((await elements_page.check_box_downloads_word_file.isChecked())).toBeFalsy()
     
+});
+
+test.only('JIRA-005 : Browser Windows Handling @smoke', async ({ page }) => {  
+    await page.pause();
+    const home_page = new HomePage(page);
+    await home_page.alerts_frame_window_card.click();
+    const alerts_frame_window_card = new AlertsFramesWindowsPage(page);
+    await alerts_frame_window_card.alert_frames_windows_browser_windows.click();
+    let [newtab] = await Promise.all([
+        page.waitForEvent('popup'),
+        alerts_frame_window_card.browser_windows_new_tab_button.click()    
+    ]);
+    await newtab.setViewportSize({ width: 1920, height: 1080 });
+    const newtab_text = await newtab.locator('#sampleHeading').innerText();
+    expect(newtab_text).toBe('This is a sample page');
+    await page.bringToFront();
+
+    let [newwindow] = await Promise.all([
+        page.waitForEvent('popup'),
+        alerts_frame_window_card.browser_windows_new_window_button.click()    
+    ]);
+    await newwindow.setViewportSize({ width: 1920, height: 1080 });
+    const newwindow_text = await newwindow.locator('#sampleHeading').innerText();
+    expect(newwindow_text).toBe('This is a sample page');
+    await page.bringToFront();
+
+    let [newwindowmessage] = await Promise.all([
+        page.waitForEvent('popup'),
+        alerts_frame_window_card.browser_windows_new_window_message_button.click()    
+    ]);
+    await newwindowmessage.setViewportSize({ width: 1920, height: 1080 });
+    const newwindowmessage_text = await newwindowmessage.locator('body').innerText();
+    expect(newwindowmessage_text).toBe('Knowledge increases by sharing but not by saving. Please share this website with your friends and in your organization.');
+    await newtab.close();
+    await newwindow.close();
+    await newwindowmessage.close();
+
 });
 

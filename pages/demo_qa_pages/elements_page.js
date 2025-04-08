@@ -4,7 +4,8 @@ export class ElementsPage {
     constructor(page) {
         this.page = page;
         //textbox side menu
-        this.side_menu_text_box = page.locator('.left-pannel>.accordion>.element-group:nth-child(1)>div>.menu-list>#item-0'); 
+        this.side_menu_elements = page.locator('.element-group:nth-child(1) .icon'); 
+        this.elements_text_box = page.locator('.left-pannel>.accordion>.element-group:nth-child(1)>div>.menu-list>#item-0'); 
         this.text_box_full_name = page.locator('#userName'); 
         this.text_box_email = page.locator('#userEmail'); 
         this.text_box_current_address = page.locator('#currentAddress'); 
@@ -16,7 +17,7 @@ export class ElementsPage {
         this.text_box_posted_current_address = page.locator('.mb-1#currentAddress'); 
         this.text_box_posted_permanent_address = page.locator('.mb-1#permanentAddress'); 
         // checkbox side menu
-        this.side_menu_check_box = page.locator('.left-pannel>.accordion>.element-group:nth-child(1)>div>.menu-list>#item-1'); 
+        this.elements_check_box = page.locator('.left-pannel>.accordion>.element-group:nth-child(1)>div>.menu-list>#item-1'); 
         this.check_box_home = page.locator('#tree-node>ol>li>.rct-text>label>.rct-checkbox'); 
         this.check_box_home_collapse = page.locator('#tree-node>ol>li>.rct-text>button'); 
         this.check_box_desktop = page.locator('li>ol>li:nth-child(1)>.rct-text>label>.rct-checkbox'); 
@@ -30,7 +31,6 @@ export class ElementsPage {
         this.check_box_downloads_word_file = page.locator('li>ol>li:nth-child(3)>ol>.rct-node:nth-child(1)>.rct-text>label>.rct-checkbox'); 
         this.check_box_downloads_excel_file = page.locator('li>ol>li:nth-child(3)>ol>.rct-node:nth-child(2)>.rct-text>label>.rct-checkbox'); 
         
-        
 
         this.side_menu_radio_button = page.locator('#item-2');  
         this.side_menu_web_tables = page.locator('#item-3');  
@@ -43,8 +43,8 @@ export class ElementsPage {
 
     async fill_up_text_box_form(full_name,email,current_address,permanent_address){
         await this.page.waitForLoadState('domcontentloaded');
-        await this.side_menu_text_box.waitFor({ state: 'visible' }); 
-        await this.side_menu_text_box.click();
+        await this.elements_text_box.waitFor({ state: 'visible' }); 
+        await this.elements_text_box.click();
         await this.text_box_full_name.fill(full_name);
         await this.text_box_email.fill(email);
         await this.text_box_current_address.fill(current_address);

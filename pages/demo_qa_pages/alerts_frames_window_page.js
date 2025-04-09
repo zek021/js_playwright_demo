@@ -18,6 +18,12 @@ export class AlertsFramesWindowsPage {
         this.alerts_prompt_click_me = page.locator('#promtButton'); 
         this.alerts_prompt_result_message = page.locator('#promptResult');
 
+        // alerts
+        this.alert_frames_windows_nested_iframes = page.locator('.left-pannel>.accordion>.element-group:nth-child(3)>div>.menu-list>#item-3'); 
+        this.nested_iframe_parent_frame = page.frameLocator('#frame1');
+        this.nested_iframe_child_frame = this.nested_iframe_parent_frame.frameLocator("iframe[srcdoc='<p>Child Iframe</p>']")
+        this.nested_iframe_child_frame_element = this.nested_iframe_child_frame.locator('body>p');
+
 
        
     }

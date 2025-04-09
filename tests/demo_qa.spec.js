@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
     await page.goto(fe_url);
 });
 
-test('JIRA-003 : Verify Text Box Form Submit', async ({ page }) => {
+test('JIRA-003 : Verify Text Box Form Submit @JIRA-003', async ({ page }) => {
     const home_page = new HomePage(page)
     const elements_page = new ElementsPage(page)
     // clicks the elements card
@@ -58,7 +58,7 @@ test('JIRA-004 : Verify Check Box @JIRA-004', async ({ page }) => {
 
 });
 
-test('JIRA-005 : Browser Windows Handling @smoke', async ({ page }) => {
+test('JIRA-005 : Browser Windows Handling @JIRA-005 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -94,7 +94,7 @@ test('JIRA-005 : Browser Windows Handling @smoke', async ({ page }) => {
 
 });
 
-test('JIRA-006 : Alert Handling @smoke', async ({ page }) => {
+test('JIRA-006 : Alert Handling @JIRA-006 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -123,7 +123,7 @@ test('JIRA-007: Delayed Alert Handling @smoke', async ({ page }) => {
     await sleep(7000);
 });
 
-test('JIRA-008: Alert Confirmation Handling (Ok) @smoke', async ({ page }) => {
+test('JIRA-008: Alert Confirmation Handling (Ok) @JIRA-008 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -139,7 +139,7 @@ test('JIRA-008: Alert Confirmation Handling (Ok) @smoke', async ({ page }) => {
     expect(result_message).toBe('You selected Ok');
 });
 
-test('JIRA-008: Alert Confirmation Handling (Cancel) @smoke', async ({ page }) => {
+test('JIRA-008: Alert Confirmation Handling (Cancel) @JIRA-008 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -155,7 +155,7 @@ test('JIRA-008: Alert Confirmation Handling (Cancel) @smoke', async ({ page }) =
     expect(result_message).toBe('You selected Cancel');
 });
 
-test('JIRA-009: Prompt Handling @smoke', async ({ page }) => {
+test('JIRA-009: Prompt Handling @JIRA-009 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -169,5 +169,17 @@ test('JIRA-009: Prompt Handling @smoke', async ({ page }) => {
     })
     await alerts_frame_window.alerts_prompt_click_me.click();
     let result_message = await alerts_frame_window.alerts_prompt_result_message.innerText();
-    expect(result_message).toBe('You entered '+name);
+    expect(result_message).toBe('You entered '+ name);
+});
+
+test('JIRA-010: Nested iFrame Handling @JIRA-010 @smoke', async ({ page }) => {
+    const home_page = new HomePage(page);
+    await home_page.alerts_frame_window_card.click();
+    const alerts_frame_window = new AlertsFramesWindowsPage(page);
+    await alerts_frame_window.alert_frames_windows_alerts.click();
+    await alerts_frame_window.alert_frames_windows_nested_iframes.click();
+    // handling iframe using page.frameLocator (This is implemented inside the POM)
+    const message = await alerts_frame_window.nested_iframe_child_frame_element.innerText();
+    expect(message).toBe('Child Iframe');
+    
 });

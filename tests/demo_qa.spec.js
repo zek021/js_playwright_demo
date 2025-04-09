@@ -7,7 +7,7 @@ import { AlertsFramesWindowsPage } from '../pages/demo_qa_pages/alerts_frames_wi
 // Apply slowMo globally for all tests in this file (100ms delay)
 test.use({
     launchOptions: {
-        slowMo: 100,  // Slows down every action by 100ms globally in all tests
+        slowMo: 1000,  // Slows down every action by 100ms globally in all tests
     },
 });
 
@@ -182,4 +182,16 @@ test('JIRA-010: Nested iFrame Handling @JIRA-010 @smoke', async ({ page }) => {
     const message = await alerts_frame_window.nested_iframe_child_frame_element.innerText();
     expect(message).toBe('Child Iframe');
     
+});
+
+test('JIRA-011: Modal Handling @JIRA-011 @smoke', async ({ page }) => {
+    const home_page = new HomePage(page);
+    await home_page.alerts_frame_window_card.click();
+    const alerts_frame_window = new AlertsFramesWindowsPage(page);
+    await alerts_frame_window.alert_frames_windows_modal_dialog.click();
+    await alerts_frame_window.modal_dialog_click_small_modal.click();
+    // handling iframe using page.frameLocator (This is implemented inside the POM)
+    const message = await alerts_frame_window.small_modal_text.innerText();
+    expect(message).toBe('This is a small modal. It has very less content');
+    await alerts_frame_window.small_modal_close_button.click();
 });

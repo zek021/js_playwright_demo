@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-test('JIRA-001 : Verify Item Added to Cart is Present in the Users Cart', async ({ page }) => {
+test('JIRA-001 : Verify Item Added to Cart is Present in the Users Cart @JIRA-001', async ({ page }) => {
     const inventory = new InventoryPage(page);
     const cart = new CartPage(page);
     const header = new Header(page);
@@ -51,7 +51,7 @@ test('JIRA-001 : Verify Item Added to Cart is Present in the Users Cart', async 
     }
 });
 
-test('JIRA-002 : Verify add to cart button change when item is added to card', async ({ page }) => {
+test('JIRA-002 : Verify add to cart button change when item is added to card @JIRA-002', async ({ page }) => {
     const inventory = new InventoryPage(page);
     const cart = new CartPage(page);
     const header = new Header(page);  

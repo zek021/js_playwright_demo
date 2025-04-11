@@ -203,8 +203,18 @@ test('JIRA-013: Date Picker @JIRA-013 @smoke', async ({ page }) => {
     const widget_page = new WidgetsPage(page);
     await widget_page.widgets_date_picker.click();
     await widget_page.date_picker_text_box.click();
-    await widget_page.date_selector('SEPTE','21','1989');
+    await widget_page.date_selector('SEPT','21','1989');
+});
+
+test('JIRA-014: Slider @JIRA-014 @smoke', async ({ page }) => {
+    const home_page = new HomePage(page);
+    await home_page.widgets_card.click();
+    const widget_page = new WidgetsPage(page);
+    await widget_page.widgets_slider.click();
+    await widget_page.set_slider_value(100);
+    await page.pause();
     await page.waitForTimeout(3000);
+
 });
 
 

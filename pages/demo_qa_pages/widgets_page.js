@@ -3,46 +3,36 @@ import { sleep } from "../../aux_function/aux_function";
 export class WidgetsPage {
     constructor(page) {
         this.page = page;
-        //browser windows side menu
+        // date 
         this.side_menu_widgets = page.locator('.element-group:nth-child(4) .icon');
         this.widgets_date_picker = page.locator('.left-pannel>.accordion>.element-group:nth-child(4)>div>.menu-list>#item-2');
         this.date_picker_text_box = page.locator('#datePickerMonthYearInput');
-
-        this.browser_windows_new_window_message_button = page.locator('#messageWindowButton');
-        // alerts
-        this.alert_frames_windows_alerts = page.locator('.left-pannel>.accordion>.element-group:nth-child(3)>div>.menu-list>#item-1');
-        this.alerts_alert_click_me = page.locator('#alertButton');
-        this.alerts_timed_alert_click_me = page.locator('#timerAlertButton');
-        this.alerts_confirmation_click_me = page.locator('#confirmButton');
-        this.alerts_confirmation_result_message = page.locator('#confirmResult');
-        this.alerts_prompt_click_me = page.locator('#promtButton');
-        this.alerts_prompt_result_message = page.locator('#promptResult');
-
-        // iframe
-        this.alert_frames_windows_nested_iframes = page.locator('.left-pannel>.accordion>.element-group:nth-child(3)>div>.menu-list>#item-3');
-        this.nested_iframe_parent_frame = page.frameLocator('#frame1');
-        this.nested_iframe_child_frame = this.nested_iframe_parent_frame.frameLocator("iframe[srcdoc='<p>Child Iframe</p>']")
-        this.nested_iframe_child_frame_element = this.nested_iframe_child_frame.locator('body>p');
-
-        // modal
-        this.alert_frames_windows_modal_dialog = page.locator('.left-pannel>.accordion>.element-group:nth-child(3)>div>.menu-list>#item-4');
-        this.modal_dialog_click_small_modal = page.locator('#showSmallModal');
-        this.small_modal_close_button = page.locator('#closeSmallModal');
-        this.small_modal_text = page.locator('.modal-body');
-
-
+        // slider
+        this.widgets_slider = page.locator('.left-pannel>.accordion>.element-group:nth-child(4)>div>.menu-list>#item-3');
+        this.slider_slider_element = page.locator('.range-slider');
 
     }
 
+    /**
+     * Selects a specific date (month, day, and year) from a date picker widget on the page.
+     * 
+     * The method:
+     * 1. Matches the input month string (at least 3 characters) to its corresponding month index.
+     * 2. Selects the correct month and year using dropdown selectors.
+     * 3. Finds the day in the date picker and clicks it.
+     * @param {string} month - The month to select (e.g., 'Jan', 'January', 'sep'). Must be at least 3 characters.
+     * @param {string|number} day - The day to select (e.g., '1', '21'). Compared as a string.
+     * @param {string} year - The full year to select (e.g., '2025').
+     * @throws Will throw an error if the month input is invalid or no matching month is found.
+     */
     async date_selector(month, day, year) {
         if (month.length < 3) {
-            return "Month input should be at least 3 characters.";
+            throw new Error('Month input should be atleast 3 char');
         } else {
             const months = [
                 'january', 'february', 'march', 'april', 'may', 'june',
                 'july', 'august', 'september', 'october', 'november', 'december'
             ];
-
             const lowerInput = month.toLowerCase();
             let selectedIndex = -1;
 
@@ -82,5 +72,14 @@ export class WidgetsPage {
                 x++;    
             }
         }
+    }
+
+    async set_slider_value(value) {
+        await this.slider_slider_element.evaluate((el, value) => {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(el, value);
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+        }, value);
     }
 }

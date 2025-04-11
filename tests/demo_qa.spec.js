@@ -3,6 +3,7 @@ import { getEnvVariable, sleep } from '../aux_function/aux_function';
 import { HomePage } from '../pages/demo_qa_pages/home_page';
 import { ElementsPage } from '../pages/demo_qa_pages/elements_page';
 import { AlertsFramesWindowsPage } from '../pages/demo_qa_pages/alerts_frames_window_page';
+import { WidgetsPage } from '../pages/demo_qa_pages/widgets_page';
 
 // Apply slowMo globally for all tests in this file (100ms delay)
 test.use({
@@ -139,7 +140,7 @@ test('JIRA-008: Alert Confirmation Handling (Ok) @JIRA-008 @smoke', async ({ pag
     expect(result_message).toBe('You selected Ok');
 });
 
-test('JIRA-008: Alert Confirmation Handling (Cancel) @JIRA-008 @smoke', async ({ page }) => {
+test('JIRA-009: Alert Confirmation Handling (Cancel) @JIRA-009 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -155,7 +156,7 @@ test('JIRA-008: Alert Confirmation Handling (Cancel) @JIRA-008 @smoke', async ({
     expect(result_message).toBe('You selected Cancel');
 });
 
-test('JIRA-009: Prompt Handling @JIRA-009 @smoke', async ({ page }) => {
+test('JIRA-010: Prompt Handling @JIRA-010 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -172,7 +173,7 @@ test('JIRA-009: Prompt Handling @JIRA-009 @smoke', async ({ page }) => {
     expect(result_message).toBe('You entered '+ name);
 });
 
-test('JIRA-010: Nested iFrame Handling @JIRA-010 @smoke', async ({ page }) => {
+test('JIRA-011: Nested iFrame Handling @JIRA-011 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -184,7 +185,7 @@ test('JIRA-010: Nested iFrame Handling @JIRA-010 @smoke', async ({ page }) => {
     
 });
 
-test('JIRA-011: Modal Handling @JIRA-011 @smoke', async ({ page }) => {
+test('JIRA-012: Modal Handling @JIRA-012 @smoke', async ({ page }) => {
     const home_page = new HomePage(page);
     await home_page.alerts_frame_window_card.click();
     const alerts_frame_window = new AlertsFramesWindowsPage(page);
@@ -195,3 +196,15 @@ test('JIRA-011: Modal Handling @JIRA-011 @smoke', async ({ page }) => {
     expect(message).toBe('This is a small modal. It has very less content');
     await alerts_frame_window.small_modal_close_button.click();
 });
+
+test('JIRA-013: Date Picker @JIRA-013 @smoke', async ({ page }) => {
+    const home_page = new HomePage(page);
+    await home_page.widgets_card.click();
+    const widget_page = new WidgetsPage(page);
+    await widget_page.widgets_date_picker.click();
+    await widget_page.date_picker_text_box.click();
+    await widget_page.date_selector('SEPTE','21','1989');
+    await page.waitForTimeout(3000);
+});
+
+
